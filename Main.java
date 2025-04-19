@@ -12,8 +12,8 @@ public class Main {
     // static methods can only refer or use static variables and static methods
     public static Scanner sc;
 
-    // public Scanner sc??? Why can't
-
+   
+    // static methods can only access static stuff
     public static ArrayList<Product> productDatabase;
 
     public static void main(String[] args) {
@@ -85,5 +85,6 @@ public class Main {
 
         Product p3 = new Product("PSOne", "PS01", 600);
         System.out.println(p3);
+        p3.name = "Xbox one";
     }
 }
