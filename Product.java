@@ -1,7 +1,7 @@
 public class Product {
-    private String name;
-    private String sku;
-    private double price;
+    protected String name;
+    protected String sku;
+    protected double price;
 
     // A constructor is a special method
     // Its name is the same as the class name
@@ -46,7 +46,16 @@ public class Product {
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        if (price > 0) {
+            this.price = price;
+        } else {
+            // An exception is an error in the form of an object
+            // when a method throws an exception, its telling
+            // the previous method that it got a problem
+            throw new IllegalArgumentException("Invalid price");
+            
+        }
+   
     }
 
     // toString() is a special method

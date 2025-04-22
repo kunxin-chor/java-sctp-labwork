@@ -18,6 +18,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        testProducts();
+
         // Create an empty ArrayList of product
         productDatabase = new ArrayList<Product>();
         while (true) {
@@ -65,8 +67,25 @@ public class Main {
         String sku = sc.nextLine();
         System.out.print("Price: ");
         double price = sc.nextDouble();
-        Product newProduct = new Product(name, sku, price);
-        productDatabase.add(newProduct);
+        sc.nextLine(); // clear buffer
+        System.out.println("Type of product? D=Digital, P=Physical");
+        String productType = sc.next();
+        sc.nextLine(); // clear 
+        if (productType.toLowerCase().equals("d")) {
+            // adding a new digital product
+            System.out.println("Enter the file format");
+            String fileFormat = sc.nextLine();
+            System.out.println("Enter the download link");
+            String downloadLink = sc.nextLine();
+
+            DigitalProduct product = new DigitalProduct(name, sku, price, fileFormat, downloadLink);
+            productDatabase.add(product);
+
+        } else {
+            // adding a new physical product
+        }
+
+
     }
 
     public static void testProducts() {
@@ -85,6 +104,12 @@ public class Main {
 
         Product p3 = new Product("PSOne", "PS01", 600);
         System.out.println(p3);
-        p3.name = "Xbox one";
+        p3.setName("Xbox one");
+
+        PhysicalProduct book = new PhysicalProduct("Test Book", "B001", 25.5, "10cmx20cm", 200, "black");
+        System.out.println(book);
+
+        DigitalProduct game = new DigitalProduct("Assassin Creed", "ARC01", 50, "zip", "https://fake.file/ac");
+        System.out.println(game);
     }
 }
