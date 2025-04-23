@@ -12,16 +12,22 @@ public class Main {
     // static methods can only refer or use static variables and static methods
     public static Scanner sc;
 
-   
     // static methods can only access static stuff
     public static ArrayList<Product> productDatabase;
 
     public static void main(String[] args) {
 
-        testProducts();
+        // testProducts();
 
         // Create an empty ArrayList of product
         productDatabase = new ArrayList<Product>();
+
+        productDatabase.add(new PhysicalProduct("PS Five", 
+                "PS05", 999, "small", 200, "black"));
+
+        productDatabase.add(new DigitalProduct("Assassin Creed", "ARC", 
+                59, "cdrom", "ubisoft.org/downloads"));
+
         while (true) {
             sc = new Scanner(System.in);
             System.out.println("Menu:");
@@ -39,10 +45,10 @@ public class Main {
                 addProduct();
             }
             if (choice == 3) {
-                System.out.println("Update a product");
+                updateProduct();
             }
             if (choice == 4) {
-                System.out.println("Delete a product");
+                deleteProduct();
             }
             if (choice == 5) {
                 break;
@@ -55,11 +61,13 @@ public class Main {
     public static void showProducts() {
         System.out.println("See All Products");
         for (Product p : productDatabase) {
-            System.out.println(p);
+           p.display();
+           System.out.println();
         }
     }
 
     public static void addProduct() {
+        // First, ask the information required to construct the Parent class
         System.out.println("Add a New Product");
         System.out.print("Enter the name: ");
         String name = sc.nextLine();
@@ -70,7 +78,9 @@ public class Main {
         sc.nextLine(); // clear buffer
         System.out.println("Type of product? D=Digital, P=Physical");
         String productType = sc.next();
-        sc.nextLine(); // clear 
+        sc.nextLine(); // clear
+
+        // check if we are adding a physical product or a digital product
         if (productType.toLowerCase().equals("d")) {
             // adding a new digital product
             System.out.println("Enter the file format");
@@ -80,12 +90,59 @@ public class Main {
 
             DigitalProduct product = new DigitalProduct(name, sku, price, fileFormat, downloadLink);
             productDatabase.add(product);
+            System.out.println("Product added successfully");
 
         } else {
             // adding a new physical product
+            System.out.print("Please enter the size: ");
+            String size = sc.nextLine();
+            System.out.println("Please enter the weight: ");
+            double weight = sc.nextDouble();
+            sc.nextLine(); // clear the buffer
+            System.out.println("Pleae enter the color: ");
+            String color = sc.nextLine();
+
+            PhysicalProduct p = new PhysicalProduct(name, sku, price, size, weight, color);
+            productDatabase.add(p);
+            System.out.println("Product added successfully");
         }
 
+    }
 
+    public static void updateProduct() {
+        System.out.println();
+        System.out.println("Update a Product");
+        for (int i = 0; i < productDatabase.size(); i++) {
+            System.out.println("Index: " + i);
+            Product p = productDatabase.get(i);
+            p.display();
+            System.out.println();
+        }
+
+        System.out.print("Enter the index of the product that you want to edit: ");
+        int index = sc.nextInt();
+        sc.nextLine();
+
+        Product productToEdit = productDatabase.get(index);
+        productToEdit.editDetails(sc);
+
+
+    }
+
+    public static void deleteProduct() {
+        System.out.println();
+        System.out.println("Delete a Product");
+        for (int i = 0; i < productDatabase.size(); i++) {
+            System.out.println("Index: " + i);
+            Product p = productDatabase.get(i);
+            p.display();
+            System.out.println();
+        }
+
+        System.out.print("Enter the index of the product that you want to delete: ");
+        int index = sc.nextInt();
+        sc.nextLine();
+        productDatabase.remove(index);
     }
 
     public static void testProducts() {
@@ -99,6 +156,10 @@ public class Main {
         // System.out.println(p.getSku());
         // System.out.println(p.getPrice());
 
+        // catalog ArrayList store Product - and ANY class that extends from Product
+        // (direct or indirectly)
+        ArrayList<Product> catalog = new ArrayList<>();
+
         Product p2 = new Product();
         System.out.println(p2);
 
@@ -108,8 +169,15 @@ public class Main {
 
         PhysicalProduct book = new PhysicalProduct("Test Book", "B001", 25.5, "10cmx20cm", 200, "black");
         System.out.println(book);
+        catalog.add(book);
 
         DigitalProduct game = new DigitalProduct("Assassin Creed", "ARC01", 50, "zip", "https://fake.file/ac");
         System.out.println(game);
+        catalog.add(game);
+
+        for (Product eachProduct : catalog) {
+            System.out.println(eachProduct);
+        }
+
     }
 }

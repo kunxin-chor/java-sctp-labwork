@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class PhysicalProduct extends Product {
     // child classes can have their own fields
     // it can be private or protected (even public)
@@ -58,6 +60,40 @@ public class PhysicalProduct extends Product {
     public String toString() {
         // super.toString() => call the parent's version of the toString method
         return super.toString() + ", PhysicalProduct [size=" + size + ", weight=" + weight + ", color=" + color + "]";
+    }
+
+    @Override
+    // we use @Override to indicate to Java that this method overrides (in supercedes) the parent's version
+    // using @Override is optional, don't have do it at all
+    // if we tell Java that this method is overriding the parent, Java can do some optimization
+    public void display() {
+        super.display();
+        System.out.println("Size: " + getSize());
+        System.out.println("Color: " + getColor());
+        System.out.println("Weight: " + getWeight());
+    }
+
+    @Override
+    public void editDetails(Scanner sc) {
+        super.editDetails(sc);
+        System.out.print("Enter new size (or press ENTER to skip): ");
+        String newSize = sc.nextLine();
+        if (! newSize.equals("")) {
+            setSize(newSize);
+        }
+
+        System.out.print("Enter new color (or press ENTER to skip): ");
+        String newColor = sc.nextLine();
+        if (! newColor.equals("")) {
+            setColor(newColor);
+        }
+
+        System.out.println("Enter new weight (or press ENTER to skip): ");
+        String tempWeight = sc.nextLine();
+        if (! tempWeight.equals("")) {
+            double newWeight = Double.parseDouble(tempWeight);
+            setWeight(newWeight);
+        }
     }
 
    
