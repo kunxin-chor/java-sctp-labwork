@@ -39,6 +39,11 @@ public class DigitalProduct extends Product {
         this.downloadLink = downloadLink;
     }
 
+    public double calculatePrice() {
+        // todo: consider sales tax
+        return this.price;
+    }
+
     @Override
     public String toString() {
         return super.toString() + ", DigitalProduct [format=" + format + ", downloadLink=" + downloadLink + "]";
@@ -64,6 +69,11 @@ public class DigitalProduct extends Product {
         if (! newDownloadLink.equals("")) {
             setDownloadLink(newDownloadLink);
         }
+    }
+
+    @Override
+    public double calculateSalesTax() {
+       return 0;
     }
 
 }

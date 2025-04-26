@@ -55,6 +55,12 @@ public class PhysicalProduct extends Product {
     }
 
 
+    public double calculatePrice() {
+        // consider sales tax
+        // consider tariff
+        // consider the shipping cost;
+        return this.price; 
+    }
 
     @Override
     public String toString() {
@@ -94,6 +100,13 @@ public class PhysicalProduct extends Product {
             double newWeight = Double.parseDouble(tempWeight);
             setWeight(newWeight);
         }
+    }
+
+
+
+    @Override
+    public double calculateSalesTax() {
+        return this.getPrice() * 1.19;
     }
 
    

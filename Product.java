@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-public class Product {
+public abstract class Product implements ITaxable{
     protected String name;
     protected String sku;
     protected double price;
@@ -61,6 +61,9 @@ public class Product {
         }
    
     }
+
+    // tell the user the total price for the product
+    public abstract double calculatePrice();
 
     // toString() is a special method
     // it will be called when we try to an object to a string

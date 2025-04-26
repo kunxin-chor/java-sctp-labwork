@@ -15,18 +15,32 @@ public class Main {
     // static methods can only access static stuff
     public static ArrayList<Product> productDatabase;
 
+    public static ArrayList<Membership> memberships;
+
+    public static ArrayList<ITaxable> taxableStuff;
+
     public static void main(String[] args) {
 
         // testProducts();
 
         // Create an empty ArrayList of product
         productDatabase = new ArrayList<Product>();
+        memberships = new ArrayList<Membership>();
+        taxableStuff = new ArrayList<>();
 
-        productDatabase.add(new PhysicalProduct("PS Five", 
-                "PS05", 999, "small", 200, "black"));
+        var ps5 =  new PhysicalProduct("PS Five", 
+        "PS05", 999, "small", 200, "black");
+        productDatabase.add(ps5);
+        taxableStuff.add(ps5);
 
-        productDatabase.add(new DigitalProduct("Assassin Creed", "ARC", 
-                59, "cdrom", "ubisoft.org/downloads"));
+        var game =new DigitalProduct("Assassin Creed", "ARC", 
+        59, "cdrom", "ubisoft.org/downloads");
+        productDatabase.add(game);
+        taxableStuff.add(game);
+
+        var subscription = new Membership("Subscrption Basic", 123);
+        memberships.add(subscription);
+        taxableStuff.add(subscription);
 
         while (true) {
             sc = new Scanner(System.in);
@@ -35,7 +49,9 @@ public class Main {
             System.out.println("2. Add a new product");
             System.out.println("3. Update a product");
             System.out.println("4. Delete a product");
-            System.out.println("5. Quit");
+            System.out.println("5. Add new membership");
+            System.out.println("6. Show taxables");
+            System.out.println("7. Quit");
             int choice = sc.nextInt();
             sc.nextLine(); // clear input buffer
             if (choice == 1) {
@@ -51,6 +67,12 @@ public class Main {
                 deleteProduct();
             }
             if (choice == 5) {
+                addNewMembership();
+            }
+            if (choice == 6) {
+                showTaxable();
+            }
+            if (choice == 6) {
                 break;
             }
 
@@ -90,6 +112,7 @@ public class Main {
 
             DigitalProduct product = new DigitalProduct(name, sku, price, fileFormat, downloadLink);
             productDatabase.add(product);
+            taxableStuff.add(product);
             System.out.println("Product added successfully");
 
         } else {
@@ -104,9 +127,15 @@ public class Main {
 
             PhysicalProduct p = new PhysicalProduct(name, sku, price, size, weight, color);
             productDatabase.add(p);
+            taxableStuff.add(p);
             System.out.println("Product added successfully");
         }
+    }
 
+    public static void showTaxable() {
+        for (var t : taxableStuff) {
+            System.out.println(t);
+        }
     }
 
     public static void updateProduct() {
@@ -143,14 +172,28 @@ public class Main {
         int index = sc.nextInt();
         sc.nextLine();
         productDatabase.remove(index);
+        taxableStuff.remove(productDatabase.get(index)); // keep the taxableStuff synced
+    }
+
+    public static void addNewMembership() {
+        System.out.println("Type: ");
+        String type = sc.nextLine();
+
+        System.out.println("Cost: ");
+        double cost = sc.nextDouble();
+        sc.nextLine();
+
+        Membership m = new Membership(type, cost);
+        memberships.add(m);
+        taxableStuff.add(m);
     }
 
     public static void testProducts() {
-        Product p = new Product();
-        p.setName("Ninentodo Switch");
-        p.setSku("NIN123");
-        p.setPrice(500);
-        System.out.println(p);
+        // Product p = new Product();
+        // p.setName("Ninentodo Switch");
+        // p.setSku("NIN123");
+        // p.setPrice(500);
+        // System.out.println(p);
 
         // System.out.println(p.getName());
         // System.out.println(p.getSku());
@@ -160,12 +203,12 @@ public class Main {
         // (direct or indirectly)
         ArrayList<Product> catalog = new ArrayList<>();
 
-        Product p2 = new Product();
-        System.out.println(p2);
+        // Product p2 = new Product();
+        // System.out.println(p2);
 
-        Product p3 = new Product("PSOne", "PS01", 600);
-        System.out.println(p3);
-        p3.setName("Xbox one");
+        // Product p3 = new Product("PSOne", "PS01", 600);
+        // System.out.println(p3);
+        // p3.setName("Xbox one");
 
         PhysicalProduct book = new PhysicalProduct("Test Book", "B001", 25.5, "10cmx20cm", 200, "black");
         System.out.println(book);
